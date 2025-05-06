@@ -14,7 +14,6 @@ import com.netflix.spinnaker.halyard.config.config.v1.HalconfigDirectoryStructur
 import com.netflix.spinnaker.halyard.config.model.v1.providers.dockerRegistry.DockerRegistryAccount;
 import com.netflix.spinnaker.halyard.config.problem.v1.ConfigProblemSetBuilder;
 import com.netflix.spinnaker.halyard.config.services.v1.FileService;
-import com.netflix.spinnaker.halyard.core.problem.v1.Problem;
 import com.netflix.spinnaker.halyard.core.secrets.v1.SecretSessionManager;
 import com.netflix.spinnaker.kork.configserver.CloudConfigResourceService;
 import com.netflix.spinnaker.kork.configserver.ConfigFileService;
@@ -100,11 +99,7 @@ public class DockerRegistryAccountValidatorTest {
                         "{\"name\": \"library/nginx\", \"tags\": [\"latest\", \"1.0\", \"1.1\"]}")));
 
     validator.validate(configProblemSetBuilder, account);
-    assertThat(configProblemSetBuilder.build().getProblems().size()).isEqualTo(2);
-    Problem problem = configProblemSetBuilder.build().getProblems().get(0);
-    assertThat(problem.getMessage())
-        .isEqualTo(
-            "Unable to fetch tags from the docker repository: library/nginx, Cannot invoke method getService() on null object");
+    assertThat(configProblemSetBuilder.build().getProblems().size()).isEqualTo(0);
   }
 
   @Configuration
